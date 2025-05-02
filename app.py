@@ -8,7 +8,7 @@ st.title("📊 تحليل تعداد سكان مصر (1996 - 2023)")
 st.sidebar.title("ℹ️ عن المشروع")
 st.sidebar.info("هذا التطبيق يعرض تحليل بيانات التعداد السكاني لمصر بين عامي 1996 و2023 بناءً على بيانات وزارة التخطيط.")
 
-egypt_population_df = pd.read_csv('./cleaned_egypt_population_wide.csv')
+egypt_population_df = pd.read_csv('cleaned_egypt_population_wide.csv')
 egypt_population_df = pd.DataFrame(egypt_population_df)
 
 egypt_area = 1002450  # كم²
