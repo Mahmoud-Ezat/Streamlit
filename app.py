@@ -136,19 +136,21 @@ def load_and_clean_data(url):
             means[col] = egypt_data[col].mean() # Calculate mean *before* filling
             egypt_data[col] = egypt_data[col].fillna(means[col])
 
-    # Store modes before filling NaNs
-    modes = {}
+    # Store modes before filling NaNs - MODIFIED BLOCK
+    modes = {} # Make sure modes dict is defined before the loop
     for col in ['Status', 'Native']:
          if col in egypt_data.columns and egypt_data[col].isna().sum() > 0:
-            # Calculate mode, handle empty Series case
-            try:
-                mode_val = egypt_data[col].mode()[0]
-                modes[col] = mode_val
-                egypt_data[col] = egypt_data[col].fillna(mode_val)
-            except IndexError:
-                st.warning(f"Could not calculate mode for column '{col}'. Filling NaNs with 'Unknown'.")
-                modes[col] = 'Unknown'
-                egypt_data[col] = egypt_data[col].fillna('Unknown')
+            # Calculate mode safely
+            calculated_mode = egypt_data[col].mode()
+            if not calculated_mode.empty:
+                mode_val = calculated_mode[0] # Get the first mode if it exists
+            else:
+                # Handle case where the column has no mode (e.g., all NaN or empty after cleaning)
+                st.warning(f"Could not calculate mode for column '{col}' (might be all NaN or empty). Filling NaNs with 'Unknown'.")
+                mode_val = 'Unknown' # Use a default value
+
+            modes[col] = mode_val
+            egypt_data[col] = egypt_data[col].fillna(mode_val)
 
 
     # --- Clean and Rename Columns ---
