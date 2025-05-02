@@ -1,10 +1,9 @@
-# requirements.txt
 streamlit
 pandas
 numpy
 requests
 beautifulsoup4
-lxml # Often used by BeautifulSoup for parsing
+lxml
 matplotlib
 seaborn
-openpyxl # Might be needed by pandas for excel, include just in case
+openpyxl
